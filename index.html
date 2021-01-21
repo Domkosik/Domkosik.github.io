@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="online, online-game, browser-game, game, tic-tac-toe, JavaScript">
+    <meta name="description" content="Tic-Tac-Toe online game playable in your browser. Try it! Play against computer.">
+    <meta name="author" content="Dominik Stašik">
+    <meta property="og:image" content="">
+    <meta property="og:description" content="Tic-Tac-Toe is a paper-and-pencil game for two players: X and O. Now is this game online and playable in your browser. 
+    Try it! Play against computer AI which is defeatable.">
+    <meta property="og:title" content="Online game: Tic-Tac-Toe">
+    <meta name="twitter:title" content="Online game: Tic-Tac-Toe">
+    <title>TTT:tic-tac-toe</title>
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <script src="https://kit.fontawesome.com/57c744003b.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&family=Yatra+One&family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <audio id="draw" src="media/draw.mp3"></audio>
+    <audio id="win" src="media/win.mp3"></audio>
+    <audio id="lose" src="media/lose.mp3"></audio>
+    <h1 id="title" class="animate__bounce">Tic-Tac-Toe</h1>
+    <h2 id="sub_title" class="animate__rollIn animate__rollOut">Have Fun</h2>
+
+    <section id="gameBoard" class="animate__rotateIn">
+        <div id="0" class="cell cell_0"></div>
+        <div id="1" class="cell cell_1"></div>
+        <div id="2" class="cell cell_2"></div>
+        <div id="3" class="cell cell_3"></div>
+        <div id="4" class="cell cell_4"></div>
+        <div id="5" class="cell cell_5"></div>
+        <div id="6" class="cell cell_6"></div>
+        <div id="7" class="cell cell_7"></div>
+        <div id="8" class="cell cell_8"></div>
+    </section>
+
+    <footer class="animate__fadeIn">
+        <div class="footer-stuff">
+            <h4 class="footer-header">Please let me know your feedback.</h4>
+            <form action="mailer.php" method="post">
+                <span id="email_err"></span>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" id="email" name="email" placeholder="email@web.net" required>
+                <textarea name="message" placeholder="Remember, be nice!" required></textarea>
+                <input type="submit" value="Send" id="btn-submit">
+            </form>
+        </div>
+        <p id="signature">Domkos <i class="far fa-copyright"></i>2021</p>
+    </footer>
+    <div id="overlay">
+        <p id="text"></p>
+    </div>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>
