@@ -1,0 +1,72 @@
+/******************************************* FORM **************************** #1D9951*/ 
+form {
+    margin: 0 auto;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 20rem;
+}
+
+#email_err {
+    display: block;
+    text-align: center;
+}
+
+input[type=text] {
+    display: block;
+    width: 100%;
+    height: 2em;
+    outline: none;
+    border: 2px solid white;
+    border-radius: 3.225em;
+    background-color: black;
+    margin-top: 1rem;
+    padding: 20px;
+    color: white;
+    font-size: 1em;
+}   
+
+input[id=email] {margin-bottom: 0.7rem;}
+
+textarea[name=message] {
+    display: block;
+    width: 100%;
+    height: 12.5em;
+    margin: 0.3125em 0;
+    resize: none;
+    outline: none;
+    border-radius: 1.225em;
+    padding: 1.3125em;
+    border: 2px solid white;
+    background-color: black;
+    color: white;
+    font-size: 1.2em;   
+}
+
+#btn-submit {
+    display: block;
+    width: 40%;
+    margin: 0.5rem auto;
+    color: black;
+    background-color: #1D9951;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px black;
+    font-weight: 600;
+    height: 2rem;
+    cursor: pointer;
+}
+
+#btn-submit:hover {
+    background-color: rgb(163, 214, 43);
+}
+
+input[type=text]:focus, 
+textarea[name=message]:focus {
+    border: 2px solid #1D9951;
+} 
+
+::placeholder {
+    color: rgba(255, 255, 255, 0.795);
+    text-align: center;
+}
