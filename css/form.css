@@ -66,6 +66,16 @@ textarea[name=message]:focus {
     border: 2px solid #1D9951;
 } 
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0 30px black inset;
+}
+
 ::placeholder {
     color: rgba(255, 255, 255, 0.795);
     text-align: center;
