@@ -2,14 +2,16 @@
 class Game{
     constructor(){
         this.gameboard = document.getElementById('gameBoard');
-        this.result = document.getElementById('gameStatus');
         this.cells = document.getElementsByClassName('cell');
-        this.cell0 = document.getElementById('0');
         this.overlay = document.getElementById('overlay');
         this.text = document.getElementById('text');
+        this.player = "X";
+        this.computer = "O";
         this.gameArr = ["", "", "", "", "", "", "", "", ""];
         this.winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
         this.subTitle = document.getElementById('sub_title');
+        this.email_name = document.getElementById("email");
+        this.email_err = document.getElementById("email_err");
     }
     // write 'X' to the gameboard
     writeX = (e) => {
@@ -19,30 +21,37 @@ class Game{
         if(this.gameArr[clickedCellIndex] !== ""){
             return
         } else {
-            this.gameArr[clickedCellIndex] = "X";
-            clicked.innerHTML = "X";
-            this.writeO();
+            this.gameArr[clickedCellIndex] = this.player;
+            clicked.innerHTML = this.player;
+            setTimeout( () => {
+                this.writeO();
+                this.result();
+            }, 100);
         }
     }
-    // write 'O' to the gameboard (randomly by computer) & make decision if the game ends with victory or draw
+    // write 'O' to the gameboard (randomly by computer)
     writeO = () => {
         let randomNumberOfCells = Math.floor(Math.random()*this.gameArr.length); // random generated number: 0 - 8 
         let randomCell = document.getElementById(randomNumberOfCells); // random Cell Element 0 - 8 
-        let roundDraw = !this.gameArr.includes("");
-            if (randomCell.innerText === "X" || randomCell.innerText === "O" ){
+            if (randomCell.innerText !== ""){
                 let newRandom = this.gameArr.indexOf(""); //get index
                 let randomCell2 = document.getElementById(newRandom);
                     if(randomCell2 !== null){
-                        this.gameArr[newRandom] = "O";
-                        randomCell2.innerHTML = "O";
+                        this.gameArr[newRandom] = this.computer;
+                        randomCell2.innerHTML = this.computer;
                     }
             } else{
-                this.gameArr[randomNumberOfCells] = "O";
-                randomCell.innerHTML = "O";
+                this.gameArr[randomNumberOfCells] = this.computer;
+                randomCell.innerHTML = this.computer;
             }
+    }
+    // check who wins
+    result = () => {
         let roundWonPlayer = false;
         let roundWonComputer = false;
-            for (let i = 0; i <= 7; i++) {
+        let roundDraw = !this.gameArr.includes("");
+        let roundContinuing = false;
+            for (let i = 0; i < this.winConditions.length; i++) {
                 const victoryCondition = this.winConditions[i];
                 let a = this.gameArr[victoryCondition[0]];
                 let b = this.gameArr[victoryCondition[1]];
@@ -50,31 +59,34 @@ class Game{
                 if (a === "" || b === "" || c === "") {
                     continue;
                 }
-                if (a === b && b === c && c === "X") {
+                if (a === b && b === c && c === this.player) {
                     roundWonPlayer = true;
                     break;
                 }
-                if (a === b && b === c && c === "O"){
+                if (a === b && b === c && c === this.computer){
                     roundWonComputer = true;
-                    break
+                    break;
                 }
             }
             if (roundWonPlayer) {
                 this.text.innerHTML = "YOU WON!" //push text to the element
                 this.overlay.style.display = "block";
                 document.getElementById('win').play();
-                return;
+                return roundWonPlayer;
             } else if(roundWonComputer){
                 this.text.innerHTML = "Computer WON!" //push text to the element
                 this.overlay.style.display = "block";
                 document.getElementById('lose').play();
-                return;
+                return roundWonComputer;
             }
-            if (roundDraw) {
+            else if(roundDraw) {
                 this.text.innerHTML = "It's draw!" //push text to the element
                 this.overlay.style.display = "block";
                 document.getElementById('draw').play();
-                return;
+                return roundDraw;
+            } else {
+                roundContinuing = true;
+                return roundContinuing;
             }
     }
     // hide overlay
@@ -84,7 +96,7 @@ class Game{
     // reset the game
     resetGame = () => {
         this.gameArr = ["", "", "", "", "", "", "", "", ""];
-        for (let i =0; i < this.cells.length; i++){
+        for (let i = 0; i < this.cells.length; i++){
             this.cells[i].innerHTML = "";
         }
     }
@@ -118,7 +130,20 @@ class Game{
             , 1300);
         setTimeout(()=>{this.subTitle.style.display = "none"}, 1600);
     }
-    // run functions on user's click 
+    // function: email Validation
+    emailValidation = (event) => {
+        const key = event.key; // "a", "1", "Shift", etc.
+        const mailformat = /^\w+([\.\-]?\w+)*@\w+([\.\-]?\w+)*(\.\w{2,3})+$/;
+        const email_value = this.email_name.value;
+        if(!email_value.match(mailformat)){ 
+            this.email_err.textContent = "*This is not valid email format.";
+            this.email_err.style.color = "#FF0000";
+        } else {
+            this.email_err.textContent = "*Valid email format";
+            this.email_err.style.color = "#00AF33";
+        }
+    };
+    // run methods on user's interaction
     playGame = () => {
         this.gameboard.addEventListener('click', this.writeX);
         this.gameboard.addEventListener('click', this.subFuncToResetAnimation);
@@ -126,28 +151,9 @@ class Game{
         this.overlay.addEventListener('click', this.closeOverlay);
         this.overlay.addEventListener('click', this.resetGame);
         window.addEventListener("load", this.setAnimationSubTitle);
+        this.email_name.addEventListener("blur", this.emailValidation);
     }
 }
 // make the game playable!
 const go = new Game();
 go.playGame();
-// function: email Validation
-        var email_name = document.getElementById("email");
-
-        function emailValidation(event){
-            var key = event.key; // "a", "1", "Shift", etc.
-            var mailformat = /^\w+([\.\-]?\w+)*@\w+([\.\-]?\w+)*(\.\w{2,3})+$/;
-            var email_value = email_name.value;
-
-            if(!email_value.match(mailformat))
-            { 
-                document.getElementById("email_err").textContent = "*This is not valid email format.";
-                document.getElementById("email_err").style.color = "#FF0000";
-            } else 
-            {
-                document.getElementById("email_err").textContent = "*Valid email format";
-                document.getElementById("email_err").style.color = "rgb(3 228 69)";
-            }
-        };
-// run validation if user run out from input email element
-document.getElementById("email").addEventListener("blur", emailValidation);
